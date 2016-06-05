@@ -1,0 +1,59 @@
+# sozial.asozial install guide
+
+Sozial.asozial is a FW8888 (Intel Atom x86) machine with 6 network interfaces,
+eth0 throu eth5 where eth5 is a fiber slot so we're not going to use it for now.
+
+## Port-eth mapping
+
+Just works in OpenWRT! They sort the ethX names by MAC like they should :)
+
+eth0: Port 1
+eth1: Port 2
+eth2: Port 3
+eth3: Port 4
+eth4: Port 5
+
+If in doubt:
+
+$ ethtool -p ethX
+
+This will blink the status leds on ethX so you can identify it visually.
+
+## Port Function Assignment
+
+eth0: Broken causes timeouts and adapter resets occationally
+eth1: Broken --''--
+eth2: --free--
+eth3: Uplink SW0, Freifunk
+eth3.2: AP Management Plane VLAN (APCTL)
+eth4: --free--
+
+## Installed stuff
+
+ - kmod-usb-hid
+  Absolutely essential. No keyboard for VGA console otherwise!
+
+ - collectd - 5.4.2-1
+  Statistics collection from APs.
+
+ - collectd-mod-interface - 5.4.2-1
+ - collectd-mod-iptables - 5.4.2-1
+ - collectd-mod-iwinfo - 5.4.2-1
+ - collectd-mod-load - 5.4.2-1
+ - collectd-mod-network - 5.4.2-1
+ - collectd-mod-ping - 5.4.2-1
+ - collectd-mod-rrdtool - 5.4.2-1
+ - collectd-mod-wireless
+
+ - sqm-scripts - 1.0.3-1
+  For rate limiting and (de)bufferbloat optimization on WAN
+
+ - ip-full - 4.0.0-1
+  It's just nice to have.
+
+ - tcpdump
+  Well you know.
+
+To install use `opkg update && opkg install <package-name>`. You need to run
+`opkg update` since openwrt stores package lists in RAM so by the time you need
+them they're likely not there.

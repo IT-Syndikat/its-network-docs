@@ -1,0 +1,66 @@
+\documentclass{article}
+
+\usepackage{bbold}
+\usepackage{commath}
+
+\begin{document}
+
+\section{VLAN Introduction}
+
+For those unfamilliar with the concept of a VLAN (Virtual LAN) here is a shot
+formal specification of what such a thing does.
+
+A Switch is a 8-tuple \( \mathcal{S} = (\mathbb{A}, \mathbb{P}, \mathbb{V}, t, v, a, \beta, \epsilon) \)
+consisting of
+\begin{itemize}
+\item a finite set of (MAC) addresses \(\mathbb{A}\),
+\item a finite set of physical ports \(\mathbb{P}\),
+\item a finite set of VLANs \(\mathbb{V}\),
+\item a mapping from physical ports and VLANs to two distinct symbols pronounced
+  ``tagged'' and ``untagged'' repectively
+  \( t : \mathbb{P} \times \mathbb{V} \rightarrow \{ \tau, \upsilon \} \),
+\item a mapping from physical ports and VLANs to VLANs (Port PVID)
+  \( v : \mathbb{P} \times \mathbb{V} \rightarrow \mathbb{V} \)
+  with \(v(p, q) \mapsto q\) when \(q \neq \epsilon\),
+\item a mapping from addresses and VLANs to physical ports (ARP Table)
+  \( a : \mathbb{A} \times \mathbb{V} \rightarrow \mathbb{P} \) and
+\item the broadcast address \(\beta \in \mathbb{A}\)
+\item the empty VLAN tag \(\epsilon \in \mathbb{V}\)
+\end{itemize}
+
+A Frame processed by a Switch \(\mathcal{S}\)
+is a tuple \( \mathcal{F}_\mathcal{S} = (d, q) \)
+consisting of a destination address \(d \in \mathbb{A} \) and a VLAN tag \( q \in \mathbb{V} \).
+
+When a Frame \( \mathcal{F}_\mathcal{S}' = (d, q') \)
+enters a port \( p \in \mathbb{P}\)
+the Switch first ensures the Packet has a VLAN tag for internal processing
+assigned by creating a new Frame \( \mathcal{F}_\mathcal{S} = (d, q)\) with \(q = v(p, q')\).
+
+\subsection{Broadcast processing}
+
+When the Frame's destination address \( d = \beta \)
+the Switch creates a new Frame for each port
+\( p \in \{\, p \mid t(p, \_) \,\} \)
+in the following manner:
+
+\begin{equation}\label{eq:egress}
+\mathcal{F}_{\mathcal{S}, p}^{e} =
+\left\{
+  \begin{array}{ll}
+     (d,q) & \mbox{if } t(p, q) = \tau \\
+     (d, \epsilon) & \mbox{if } t(p, q) = \upsilon\\
+  \end{array}
+\right.
+\end{equation}
+
+
+\( \mathcal{F}_{\mathcal{S}, p}^{e} \)
+is then transmitted out port \(p\) and processing of this Frame is complete.
+
+\subsection{Unicast processing}
+
+When the Frame's destination address \(d\) is not the broadcast address the Switch first determines the egress port \(p = a(d, q)\). Then a new Frame is created as in equation \ref{eq:egress}. \( \mathcal{F}_{\mathcal{S}, p}^{e} \)
+is then transmitted out port \(p\) and processing of this Frame is complete.
+
+\end{document}

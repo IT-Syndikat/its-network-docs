@@ -1,0 +1,32 @@
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.010035] ------------[ cut here ]------------
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.032627] WARNING: CPU: 0 PID: 0 at net/sched/sch_generic.c:303 0xc138576b()
+Mon Mar 14 23:00:55 2016 kern.info kernel: [  814.063157] NETDEV WATCHDOG: eth0 (e1000): transmit queue 0 timed out
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.091381] Modules linked in: pppoe ppp_async iptable_nat pppox ppp_generic nf_nat_ipv6 nf_nat_ipv4 nf_conntrack_ipv6 nf_conntrack_ipv4 ipt_REJECT ipt_MASQUERADE xt_time xt_tcpudp xt_state xt_nat xt_multiport xt_mark xt_mac xt_limit xt_id xt_conntrack xt_comment xt_TCPMSS xt_REDIRECT xt_LOG xt_CT via_velocity via_rhine usbhid slhc sis900 r8169 pcnet32 nf_reject_ipv4 nf_nat_masquerade_ipv4 nf_nat_ftp nf_nat nf_log_ipv4 nf_defrag_ipv6 nf_defrag_ipv4 nf_conntrackMon Mar 14 23:00:55 2016 kern.warn kernel: [  814.464766] CPU: 0 PID: 0 Comm: swapper Not tainted 3.18.20 #1
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.492993] Hardware name: PhoenixAward 945GSE/945GSE, BIOS 6.00 PG 08/25/2009
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.525431]  c140194e c1030133 c14d7964 df40bf54 00000000 c14d54de 0000012f c138576b
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.559901]  00000009 df5cc000 df680780 ffff392b ffffff32 c1030183 00000009 df40bf3c
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.594465]  c14d7964 df40bf54 c138576b c14d54de 0000012f c14d7964 df5cc000 e08de401
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.628997] Call Trace:
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.647116]  [<c140194e>] ? 0xc140194e
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.669092]  [<c1030133>] ? 0xc1030133
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.690998]  [<c138576b>] ? 0xc138576b
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.712747]  [<c1030183>] ? 0xc1030183
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.734379]  [<c138576b>] ? 0xc138576b
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.755921]  [<c1385660>] ? 0xc1385660
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.777369]  [<c1053d41>] ? 0xc1053d41
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.798769]  [<e0de69d7>] ? 0xe0de69d7 [e1000e@e0dd0000+0x1dce4]
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.827004]  [<c1053f4e>] ? 0xc1053f4e
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.848381]  [<c1031ef5>] ? 0xc1031ef5
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.869588]  [<c1031e60>] ? 0xc1031e60
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.890599]  [<c10033f9>] ? 0xc10033f9
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.911499]  <IRQ>  [<c103214e>] ? 0xc103214e
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.934411]  [<c100322d>] ? 0xc100322d
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.955361]  [<c1058417>] ? 0xc1058417
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.976194]  [<c1405b69>] ? 0xc1405b69
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  814.996993]  [<c1050000>] ? 0xc1050000
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  815.017673]  [<c134044d>] ? 0xc134044d
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  815.038232]  [<c104a595>] ? 0xc104a595
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  815.058685]  [<c1547a87>] ? 0xc1547a87
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  815.079028]  [<c1547560>] ? 0xc1547560
+Mon Mar 14 23:00:55 2016 kern.warn kernel: [  815.099175] ---[ end trace d228a7100660f086 ]---
+Mon Mar 14 23:00:55 2016 kern.err kernel: [  815.128211] e1000 0000:05:0a.0 eth0: Reset adapter

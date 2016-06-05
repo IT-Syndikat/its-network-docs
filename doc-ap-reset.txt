@@ -1,0 +1,2 @@
+Hold reset button for ~25+ sec. LED goes off then starts flashing fast if you
+hold it too long it will start flashing slowly and that's no good.
