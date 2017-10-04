@@ -1,0 +1,11 @@
+PROFILE=tl-wr841-v10
+FILES=files/tl-wr841-v10
+PACKAGES='
+  collectd
+  collectd-mod-wireless
+  collectd-mod-interface
+  collectd-mod-load
+  collectd-mod-network
+  -firewall
+  -ip6tables
+  -kmod-ip6tables'
