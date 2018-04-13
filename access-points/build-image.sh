@@ -66,4 +66,4 @@ cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/generic/lede*-ar71xx-generic-"${profil
         ( cd "$DLDIR"   ; sha512sum "$imagebuilder" )
         ( cd "$IMAGEDIR"; sha512sum lede*-ar71xx-generic-"${profile}"-squashfs-sysupgrade.bin )
     } | sed 's/^/  /'
-} > "$IMAGEDIR"/image-manifest
+} > "$IMAGEDIR"/"${profile}".image-manifest
