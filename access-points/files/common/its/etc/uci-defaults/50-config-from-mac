@@ -1,0 +1,61 @@
+#!/bin/sh
+set -e
+set -u
+
+mac=$(cat /sys/class/net/wlan0/address)
+
+hostname=
+channel_11a=
+channel_11g=
+if [ "$mac" = 60:e3:27:b8:16:ec ]; then
+    hostname=cz-ap0
+    channel_11g=6
+elif [ "$mac" = 60:e3:27:ed:86:9a ]; then
+    hostname=cz-ap1
+    channel_11g=11
+elif [ "$mac" = 78:8a:20:82:d6:bd ]; then
+    hostname=cz-ap2
+    channel_11a=108
+    htmode_11a=VHT80
+elif [ "$mac" = 60:e3:27:ed:9b:b0 ]; then
+    hostname=lz-ap0
+    channel_11g=1
+fi
+
+
+# disable root password login
+sed -i 's/^root.*$/root:*:0:0:99999:7:::/' /etc/shadow
+
+uci set system.@system[0].hostname=$hostname
+uci commit system
+echo $(uci get system.@system[0].hostname) > /proc/sys/kernel/hostname
+
+uci set dropbear.@dropbear[0].PasswordAuth='off'
+uci set dropbear.@dropbear[0].RootPasswordAuth='off'
+uci commit dropbear
+/etc/init.d/dropbear restart
+
+#WIFI_IFACES=$(uci show wireless | sed -nr 's/^wireless\.([^=]+)=wifi-iface*$/\1/p')
+WIFI_DEVICES=$(uci show wireless | sed -nr 's/^wireless\.([^=]+)=wifi-device*$/\1/p')
+
+for radio in $WIFI_DEVICES; do
+    disabled=1
+    if [ $(uci get wireless.$radio.hwmode) = '11a' ]; then
+        # 5 GHz
+        if [ -n "$channel_11a" ]; then
+            uci set wireless.$radio.channel=$channel_11a
+            uci set wireless.$radio.htmode=${htmode_11a:-HT20}
+            disabled=0
+        fi
+    elif [ $(uci get wireless.$radio.hwmode) = '11g' ]; then
+        # 2.4 GHz
+        if [ -n "$channel_11g" ]; then
+            uci set wireless.$radio.channel=$channel_11g
+            disabled=0
+        fi
+    fi
+
+    uci set wireless.$radio.disabled=$disabled
+    uci set wireless.$radio.country=AT
+done
+uci commit wireless

@@ -1,5 +1,13 @@
 #!/bin/sh
 
+
+uci_set_forall_wifi_ifaces () {
+    WIFI_IFACES=$(uci show wireless | sed -nr 's/^wireless\.([^=]+)=wifi-iface*$/\1/p')
+    for iface in $WIFI_IFACES; do
+        uci set wireless.$iface."$1"
+    done
+}
+
 logger -t wifi-uplink hotplug "$DEVICE" "$INTERFACE" "$ACTION"
 
 # 'lan' doesn't work for some reason
@@ -9,12 +17,12 @@ logger -t wifi-uplink devchange "$DEVICE" "$INTERFACE" "$ACTION"
 
 [ "$ACTION" = ifup ] && {
     logger -t wifi-uplink up "$DEVICE" "$INTERFACE" "$ACTION"
-    uci set wireless.@wifi-device[0].disabled=0
+    uci_set_forall_wifi_ifaces disabled=0
     wifi
 }
 
 [ "$ACTION" = ifdown ] && {
     logger -t wifi-uplink down "$DEVICE" "$INTERFACE" "$ACTION"
     wifi down
-    uci set wireless.@wifi-device[0].disabled=1
+    uci_set_forall_wifi_ifaces disabled=1
 }

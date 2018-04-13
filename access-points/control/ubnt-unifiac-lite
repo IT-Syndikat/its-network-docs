@@ -1,12 +1,9 @@
-PROFILE=tl-wr841-v10
-FILES=files/tl-wr841-v10
+PROFILE=ubnt-unifiac-lite
+FILES=files/ubnt-unifiac-lite
 COMMON_FILES=files/common/its
 PACKAGES='
   collectd
   collectd-mod-wireless
   collectd-mod-interface
   collectd-mod-load
-  collectd-mod-network
-  -firewall
-  -ip6tables
-  -kmod-ip6tables'
+  collectd-mod-network'

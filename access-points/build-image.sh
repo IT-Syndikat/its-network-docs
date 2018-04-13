@@ -15,7 +15,7 @@ mkdir -p "$IMAGEDIR"
 
 VERSION="$(basename "$(git describe --always --tags --dirty --match 'access-points/*')")"
 IMAGEDIR="$IMAGEDIR"/"$VERSION"
-mkdir "$IMAGEDIR"
+mkdir -p "$IMAGEDIR"
 
 imagebuilder="$(basename "$IMAGEBUILDER_URL")"
 
@@ -28,25 +28,34 @@ tar -C "$BUILDDIR" -axf "$DLDIR"/"$imagebuilder"
 
 IMAGEBUILDER_DIR="$BUILDDIR"/"$(tar -atf "$DLDIR"/"$imagebuilder" | head -n1)"
 
-image="lede-ar71xx-generic-tl-wr841-v10-squashfs-sysupgrade.bin"
-
+profile=$(. "$CONTROL"; echo "${PROFILE}")
 
 (
     IFS='
 '
     export PROFILE PACKAGES
+
     . "$CONTROL"
 
     tmp=$(mktemp --tmpdir -d files.XXXXXXXXX)
 
-    cp -aLTv "$TOPDIR/$FILES" "$tmp"
+    mkdir -p "$tmp"/etc
     echo "$VERSION" > "$tmp"/etc/its-access-point-version
 
+    if [ -n "$COMMON_FILES" ]; then
+            cp -aLTv "$TOPDIR/$COMMON_FILES" "$tmp"
+    fi
+
+    if [ -n "$FILES" ]; then
+            cp -aLTv "$TOPDIR/$FILES" "$tmp"
+    fi
+
     cd "$IMAGEBUILDER_DIR"
-    make image FILES="$tmp"
+    unset COMMON_FILES
+    make image FILES="$tmp" 1>&2
 )
 
-cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/generic/"$image" "$IMAGEDIR"/
+cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/generic/lede*-ar71xx-generic-"${profile}"-squashfs-sysupgrade.bin "$IMAGEDIR"/
 
 {
     printf '%s\n' "Date: $(date -R)"
@@ -55,6 +64,6 @@ cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/generic/"$image" "$IMAGEDIR"/
     printf 'Checksums-Sha512:\n'
     {
         ( cd "$DLDIR"   ; sha512sum "$imagebuilder" )
-        ( cd "$IMAGEDIR"; sha512sum "$image")
+        ( cd "$IMAGEDIR"; sha512sum lede*-ar71xx-generic-"${profile}"-squashfs-sysupgrade.bin )
     } | sed 's/^/  /'
 } > "$IMAGEDIR"/image-manifest
