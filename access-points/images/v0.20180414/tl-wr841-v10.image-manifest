@@ -1,0 +1,6 @@
+Date: Sat, 14 Apr 2018 01:26:25 +0200
+Image-Builder: http://downloads.lede-project.org/releases/17.01.4/targets/ar71xx/generic/lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64.tar.xz
+
+Checksums-Sha512:
+  5c21eae8fb2d6dfceea833c2c442c6a5af2c700e57f6db15565d659107c3f71fb27eca4afaf0f5dc94cf842dde5cfcf3798036ea710b36312f667b5c8d942c01  lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64.tar.xz
+  1a49f621364a26e22ea98cd822ce9f810e4323649cc8b943996c640cb56b7fd80c120dcbb2bf66995128c8a611e8b554823fe93e0dd819a951e3c3fe11724037  lede-17.01.4-ar71xx-generic-tl-wr841-v10-squashfs-sysupgrade.bin
