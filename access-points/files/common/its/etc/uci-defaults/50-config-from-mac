@@ -2,7 +2,7 @@
 set -e
 set -u
 
-mac=$(cat /sys/class/net/wlan0/address)
+mac=$(cat /sys/class/ieee80211/phy0/macaddress)
 
 hostname=
 channel_11a=
