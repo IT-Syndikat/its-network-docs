@@ -39,23 +39,27 @@ uci commit dropbear
 WIFI_DEVICES=$(uci show wireless | sed -nr 's/^wireless\.([^=]+)=wifi-device*$/\1/p')
 
 for radio in $WIFI_DEVICES; do
-    disabled=1
+    disabled=true
     if [ $(uci get wireless.$radio.hwmode) = '11a' ]; then
         # 5 GHz
         if [ -n "$channel_11a" ]; then
             uci set wireless.$radio.channel=$channel_11a
             uci set wireless.$radio.htmode=${htmode_11a:-HT20}
-            disabled=0
+            disabled=false
         fi
     elif [ $(uci get wireless.$radio.hwmode) = '11g' ]; then
         # 2.4 GHz
         if [ -n "$channel_11g" ]; then
             uci set wireless.$radio.channel=$channel_11g
-            disabled=0
+            disabled=false
         fi
     fi
 
-    uci set wireless.$radio.disabled=$disabled
+    if $disabled; then
+        uci set wireless.$radio.disabled=1
+    else
+        uci delete wireless.$radio.disabled || true
+    fi
     uci set wireless.$radio.country=AT
 done
 uci commit wireless
