@@ -1,4 +1,4 @@
-IT-Syndika Network Docs
-=======================
+IT-Syndikat Network Docs
+========================
 
 - [Access Points](access-points/)
