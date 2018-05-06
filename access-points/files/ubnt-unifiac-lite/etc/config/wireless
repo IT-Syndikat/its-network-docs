@@ -12,6 +12,13 @@ config wifi-iface 'default_radio0'
 	option device 'radio0'
 	option network 'lan'
 	option mode 'ap'
+	option ssid 'it-syndikat'
+	option encryption 'psk2'
+
+config wifi-iface 'pinned_radio0'
+	option device 'radio0'
+	option network 'lan'
+	option mode 'ap'
 	option ssid 'it-syndikat 5 GHz'
 	option encryption 'psk2'
 
