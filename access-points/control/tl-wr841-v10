@@ -1,4 +1,6 @@
 PROFILE=tl-wr841-v10
+TARGET=ar71xx
+SUBTARGET=tiny
 FILES=files/tl-wr841-v10
 COMMON_FILES=files/common/its
 PACKAGES='

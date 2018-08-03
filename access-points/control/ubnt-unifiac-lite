@@ -1,5 +1,7 @@
 PROFILE=ubnt-unifiac-lite
 FILES=files/ubnt-unifiac-lite
+TARGET=ar71xx
+SUBTARGET=generic
 COMMON_FILES=files/common/its
 PACKAGES='
   collectd

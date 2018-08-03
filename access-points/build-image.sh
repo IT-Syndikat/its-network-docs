@@ -29,6 +29,8 @@ tar -C "$BUILDDIR" -axf "$DLDIR"/"$imagebuilder"
 IMAGEBUILDER_DIR="$BUILDDIR"/"$(tar -atf "$DLDIR"/"$imagebuilder" | head -n1)"
 
 profile=$(. "$CONTROL"; echo "${PROFILE}")
+target=$(. "$CONTROL"; echo "${TARGET}")
+subtarget=$(. "$CONTROL"; echo "${SUBTARGET}")
 
 (
     IFS='
@@ -55,7 +57,7 @@ profile=$(. "$CONTROL"; echo "${PROFILE}")
     make image FILES="$tmp" 1>&2
 )
 
-cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/generic/lede*-ar71xx-generic-"${profile}"-squashfs-sysupgrade.bin "$IMAGEDIR"/
+cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/"${subtarget}"/openwrt*-"${target}-${subtarget}-${profile}"-squashfs-sysupgrade.bin "$IMAGEDIR"/
 
 {
     printf '%s\n' "Date: $(date -R)"
@@ -64,6 +66,6 @@ cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/generic/lede*-ar71xx-generic-"${profil
     printf 'Checksums-Sha512:\n'
     {
         ( cd "$DLDIR"   ; sha512sum "$imagebuilder" )
-        ( cd "$IMAGEDIR"; sha512sum lede*-ar71xx-generic-"${profile}"-squashfs-sysupgrade.bin )
+        ( cd "$IMAGEDIR"; sha512sum openwrt*-"${target}-${subtarget}-${profile}"-squashfs-sysupgrade.bin )
     } | sed 's/^/  /'
 } > "$IMAGEDIR"/"${profile}".image-manifest

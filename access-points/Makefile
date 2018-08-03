@@ -1,12 +1,10 @@
 all: its
 
-export IMAGEBUILDER_URL = http://downloads.lede-project.org/releases/17.01.4/targets/ar71xx/generic/lede-imagebuilder-17.01.4-ar71xx-generic.Linux-x86_64.tar.xz
-
 its-tl-wr841-v10:
-	./build-image.sh control/tl-wr841-v10
+	IMAGEBUILDER_URL='https://downloads.openwrt.org/releases/18.06.0/targets/ar71xx/tiny/openwrt-imagebuilder-18.06.0-ar71xx-tiny.Linux-x86_64.tar.xz' ./build-image.sh control/tl-wr841-v10
 
 its-ubnt-unifiac-lite:
-	./build-image.sh control/ubnt-unifiac-lite
+	IMAGEBUILDER_URL='https://downloads.openwrt.org/releases/18.06.0/targets/ar71xx/generic/openwrt-imagebuilder-18.06.0-ar71xx-generic.Linux-x86_64.tar.xz' ./build-image.sh control/ubnt-unifiac-lite
 
 its: its-ubnt-unifiac-lite its-tl-wr841-v10
 
