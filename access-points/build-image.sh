@@ -34,14 +34,12 @@ target=$(. "$CONTROL"; echo "${TARGET}")
 subtarget=$(. "$CONTROL"; echo "${SUBTARGET}")
 
 (
-    IFS='
-'
     # `make` below consumes these
     export PROFILE PACKAGES
 
     . "$CONTROL"
 
-    tmp=$(mktemp --tmpdir -d files.XXXXXXXXX)
+    tmp="$(mktemp --tmpdir -d files.XXXXXXXXX)"
 
     mkdir -p "$tmp"/etc
     echo "$VERSION" > "$tmp"/etc/its-access-point-version
