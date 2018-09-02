@@ -7,14 +7,14 @@ IMAGEBUILDER_URL=${IMAGEBUILDER_URL:-http://downloads.lede-project.org/snapshots
 TOPDIR="$PWD"
 DLDIR=${DLDIR:-"dl"}
 BUILDDIR=${BUILDDIR:-"build"}
-IMAGEDIR=${IMAGEDIR:-"images"}
+IMAGESDIR=${IMAGEDIR:-"images"}
 
 mkdir -p "$DLDIR"
 mkdir -p "$BUILDDIR"; rm -rf "$BUILDDIR"/*
-mkdir -p "$IMAGEDIR"
+mkdir -p "$IMAGESDIR"
 
 VERSION="$(basename "$(git describe --always --tags --dirty --match 'access-points/*')")"
-IMAGEDIR="$IMAGEDIR"/"$VERSION"
+IMAGEDIR="$IMAGESDIR"/"$VERSION"
 mkdir -p "$IMAGEDIR"
 
 imagebuilder="$(basename "$IMAGEBUILDER_URL")"
