@@ -28,6 +28,7 @@ tar -C "$BUILDDIR" -axf "$DLDIR"/"$imagebuilder"
 
 IMAGEBUILDER_DIR="$BUILDDIR"/"$(tar -atf "$DLDIR"/"$imagebuilder" | head -n1)"
 
+# source control file and extract variables
 profile=$(. "$CONTROL"; echo "${PROFILE}")
 target=$(. "$CONTROL"; echo "${TARGET}")
 subtarget=$(. "$CONTROL"; echo "${SUBTARGET}")
@@ -35,6 +36,7 @@ subtarget=$(. "$CONTROL"; echo "${SUBTARGET}")
 (
     IFS='
 '
+    # `make` below consumes these
     export PROFILE PACKAGES
 
     . "$CONTROL"
@@ -59,6 +61,8 @@ subtarget=$(. "$CONTROL"; echo "${SUBTARGET}")
 
 cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/"${subtarget}"/openwrt*-"${target}-${subtarget}-${profile}"-squashfs-sysupgrade.bin "$IMAGEDIR"/
 
+ln -snf "$VERSION" images/latest
+
 {
     printf '%s\n' "Date: $(date -R)"
     printf '%s\n' "Image-Builder: $IMAGEBUILDER_URL"
@@ -69,3 +73,8 @@ cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/"${subtarget}"/openwrt*-"${target}-${s
         ( cd "$IMAGEDIR"; sha512sum openwrt*-"${target}-${subtarget}-${profile}"-squashfs-sysupgrade.bin )
     } | sed 's/^/  /'
 } > "$IMAGEDIR"/"${profile}".image-manifest
+
+echo
+echo
+echo "Wrote images to $IMAGEDIR"
+echo
