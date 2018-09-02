@@ -42,7 +42,13 @@ subtarget=$(. "$CONTROL"; echo "${SUBTARGET}")
     tmp="$(mktemp --tmpdir -d files.XXXXXXXXX)"
 
     mkdir -p "$tmp"/etc
-    echo "$VERSION" > "$tmp"/etc/its-access-point-version
+    mkdir -p "$tmp"/etc/its-access-point/
+    printf '%s\n' "$VERSION" > "$tmp"/etc/its-access-point-version # legacy
+    printf '%s\n' "$VERSION" > "$tmp"/etc/its-access-point/version
+    printf '%s\n' "$IMAGEBUILDER_URL" \
+           > "$tmp"/etc/its-access-point/imagebuilder-url
+    sha512sum "$imagebuilder" > "$tmp"/etc/its-access-point/imagebuilder-hash
+    cat "$CONTROL" > "$tmp"/etc/its-access-point/control
 
     if [ -n "$COMMON_FILES" ]; then
             cp -aLTv "$TOPDIR/$COMMON_FILES" "$tmp"
