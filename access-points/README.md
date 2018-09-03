@@ -11,7 +11,7 @@ See [`files/common/its/etc/uci-defaults/50-config-from-mac`](files/common/its/et
 Building Images
 ---------------
 
-The [`Makefile`][./Makefile] provides a target for each device type we have
+The [`Makefile`](./Makefile) provides a target for each device type we have
 images for, to build images for all devices at the space you can use:
 
 ```
