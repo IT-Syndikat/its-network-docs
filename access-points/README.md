@@ -1,7 +1,7 @@
 ITS WiFi Access Points Setup
 ============================
 
-We build the access points in use at the space using the LEDE/OpenWrt image
+We build the access points in use at the space using the OpenWrt image
 builder. The deployed images are completely hands-off. No configuration of the
 running firmware should be necessary as all the device specific setup is done
 using `/etc/uci-defaults/` by keying off the device's MAC address.
