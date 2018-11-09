@@ -2,65 +2,97 @@
 
 \usepackage{bbold}
 \usepackage{commath}
+\usepackage{parskip}
+%\usepackage{fullpage}
+
+\usepackage{booktabs}
 
 \begin{document}
 
 \section{VLAN Introduction}
 
-For those unfamilliar with the concept of a VLAN (Virtual LAN) here is a shot
+For those unfamilliar with the concept of a VLAN (Virtual LAN) here is a short
 formal specification of what such a thing does.
 
-A Switch is a 8-tuple \( \mathcal{S} = (\mathbb{A}, \mathbb{P}, \mathbb{V}, t, v, a, \beta, \epsilon) \)
+A switch is a 8-tuple \( \mathcal{S} = (\mathbb{A}, \mathbb{P}, \mathbb{V}, t, v, a, \beta, \epsilon) \)
 consisting of
 \begin{itemize}
 \item a finite set of (MAC) addresses \(\mathbb{A}\),
 \item a finite set of physical ports \(\mathbb{P}\),
 \item a finite set of VLANs \(\mathbb{V}\),
-\item a mapping from physical ports and VLANs to two distinct symbols pronounced
-  ``tagged'' and ``untagged'' repectively
-  \( t : \mathbb{P} \times \mathbb{V} \rightarrow \{ \tau, \upsilon \} \),
-\item a mapping from physical ports and VLANs to VLANs (Port PVID)
-  \( v : \mathbb{P} \times \mathbb{V} \rightarrow \mathbb{V} \)
-  with \(v(p, q) \mapsto q\) when \(q \neq \epsilon\),
-\item a mapping from addresses and VLANs to physical ports (ARP Table)
-  \( a : \mathbb{A} \times \mathbb{V} \rightarrow \mathbb{P} \) and
+\item a mapping from VLANs and physical ports to three distinct symbols
+  pronounced ``tagged'', ``untagged'' and ``neither'' repectively
+  \( t : \mathbb{V} \times \mathbb{P} \rightarrow \{ \tau, \upsilon, \eta \} \),
+\item a mapping from VLANs and physical ports to VLANs (Port PVID)\\
+  \( v : \mathbb{V} \times \mathbb{P} \rightarrow \mathbb{V} \)
+  with \(v(q, p) \mapsto q\) when \(q \neq \epsilon\)
+  % When PVID of a port is not member in a VLAN an error is thrown in the web
+  % interface
+  and \(v(\epsilon, p) \not\mapsto q \) when \( t(q,p) = \eta \),
+\item a partial mapping from addresses and VLANs to physical ports (ARP Table)
+  \( a : \mathbb{A} \times \mathbb{V} \rightharpoonup \mathbb{P} \) and
 \item the broadcast address \(\beta \in \mathbb{A}\)
 \item the empty VLAN tag \(\epsilon \in \mathbb{V}\)
 \end{itemize}
 
-A Frame processed by a Switch \(\mathcal{S}\)
+
+\paragraph{Definition}
+A frame \( \mathcal{F}_\mathcal{S} \)
+processed by a switch \(\mathcal{S}\)
 is a tuple \( \mathcal{F}_\mathcal{S} = (d, q) \)
-consisting of a destination address \(d \in \mathbb{A} \) and a VLAN tag \( q \in \mathbb{V} \).
+consisting of a destination address \(d \in \mathbb{A} \)
+and a VLAN tag \( q \in \mathbb{V} \).
 
-When a Frame \( \mathcal{F}_\mathcal{S}' = (d, q') \)
+% TODO: switch checks if the port is even in the VLAN and discards it if not
+
+When a frame \( \mathcal{F}_\mathcal{S} = (d, q) \)
 enters a port \( p \in \mathbb{P}\)
-the Switch first ensures the Packet has a VLAN tag for internal processing
-assigned by creating a new Frame \( \mathcal{F}_\mathcal{S} = (d, q)\) with \(q = v(p, q')\).
+the switch first ensures the frame has a VLAN tag for internal processing
+assigned by creating a new frame \( \mathcal{F}_\mathcal{S}^i = (d, q')\)
+with \(q' = v(q, p)\).
 
-\subsection{Broadcast processing}
+Next the switch checks if the VLAN is allowed on this port. When
+\( v(q, p) = \eta \)
+the frame is dropped and processing of this frame is complete.
+% This could also be before assigning the PVID because v(ε, p) can only be VLANs
+% q that are not t(q, p) = η
 
-When the Frame's destination address \( d = \beta \)
-the Switch creates a new Frame for each port
-\( p \in \{\, p \mid t(p, \_) \,\} \)
-in the following manner:
+\paragraph{Unicast processing}
+When the frame's destination address \(d\)
+is not the broadcast address the switch first determines the egress port
+\(p = a(d, q)\).
+If it is not defined the frame is dropped and processing of this frame is
+complete. Next the final egress frame is created as in equation
+\eqref{eq:egress}. \( \mathcal{F}_{\mathcal{S}, p}^{e} \)
+is then transmitted out port \(p\) and processing of this frame is complete.
 
 \begin{equation}\label{eq:egress}
 \mathcal{F}_{\mathcal{S}, p}^{e} =
 \left\{
   \begin{array}{ll}
-     (d,q) & \mbox{if } t(p, q) = \tau \\
-     (d, \epsilon) & \mbox{if } t(p, q) = \upsilon\\
+     (d,q) & \mbox{if } t(q, p) = \tau \\
+     (d, \epsilon) & \mbox{if } t(q, p) = \upsilon\\
   \end{array}
 \right.
 \end{equation}
 
 
-\( \mathcal{F}_{\mathcal{S}, p}^{e} \)
-is then transmitted out port \(p\) and processing of this Frame is complete.
+\paragraph{Broadcast processing}
+When the frame's destination address \( d = \beta \)
+the switch creates a new frame for each port
+\( p \in \{\, p \mid \forall q.\; t(q, p) \neq \eta \,\} \)
+as in equation \eqref{eq:egress}. The frames \( \mathcal{F}_{\mathcal{S}, p}^{e} \)
+are then transmitted out each port \(p\)
+respectively and processing of this frame is complete.
 
-\subsection{Unicast processing}
 
-When the Frame's destination address \(d\) is not the broadcast address the Switch first determines the egress port \(p = a(d, q)\). Then a new Frame is created as in equation \ref{eq:egress}. \( \mathcal{F}_{\mathcal{S}, p}^{e} \)
-is then transmitted out port \(p\) and processing of this Frame is complete.
 
 \end{document}
+
+% \section{Version history}
+% Current Version: 2
+
+% When frames are dropped was not considered,
+% Arguments to \(v\) were swapped,
+% Requirement for port PVIDs to actually be a member of the VLAN added
+% Made ARP table a partial function (duh)
