@@ -1,0 +1,6 @@
+Date: Mon, 14 Oct 2019 19:39:55 +0200
+Image-Builder: https://downloads.openwrt.org/releases/18.06.4/targets/ar71xx/generic/openwrt-imagebuilder-18.06.4-ar71xx-generic.Linux-x86_64.tar.xz
+
+Checksums-Sha512:
+  ad481db293cc690087d1dd92b802584e158eb8f435c3a911e7406e21f3343d456a07f9f16d5f636817f55fe64c08d7d6a1227284f247f281251dde76430ae7cb  openwrt-imagebuilder-18.06.4-ar71xx-generic.Linux-x86_64.tar.xz
+  557e50d6cbd8f54ce9c7ce27d7366cc65d1dd310b225d8929023194a154989c6a450b7c966a9e74d020752afdee4e0379019dfabf756ce22b42de3748d822fca  openwrt-18.06.4-ar71xx-generic-ubnt-unifiac-lite-squashfs-sysupgrade.bin

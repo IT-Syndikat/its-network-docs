@@ -1,0 +1,6 @@
+Date: Mon, 14 Oct 2019 19:40:24 +0200
+Image-Builder: https://downloads.openwrt.org/releases/18.06.4/targets/ar71xx/tiny/openwrt-imagebuilder-18.06.4-ar71xx-tiny.Linux-x86_64.tar.xz
+
+Checksums-Sha512:
+  91f25fdef9cdd278971e2721dd152d719053588aae03a7ef283a25825b214e8521facea82d8d3f50d7c3bcc78ebe381586c28590e31dc8af5c309cb9c84a530a  openwrt-imagebuilder-18.06.4-ar71xx-tiny.Linux-x86_64.tar.xz
+  e30304bb8e1215927a37f98f07c9ed0672fc89e947b49e4cbfaa83ad4086e1f05ef367f325d0c4277718c16f8fd9bf59a23992eb01710e5ad49b71c49dd81f44  openwrt-18.06.4-ar71xx-tiny-tl-wr841-v10-squashfs-sysupgrade.bin
