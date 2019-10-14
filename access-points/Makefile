@@ -1,6 +1,6 @@
 all: its
 
-OPENWRT_VERSION=18.06.1
+OPENWRT_VERSION=18.06.4
 
 its-tl-wr841-v10:
 	IMAGEBUILDER_URL='https://downloads.openwrt.org/releases/$(OPENWRT_VERSION)/targets/ar71xx/tiny/openwrt-imagebuilder-$(OPENWRT_VERSION)-ar71xx-tiny.Linux-x86_64.tar.xz' ./build-image.sh control/tl-wr841-v10
