@@ -18,11 +18,21 @@ IMAGEDIR="$IMAGESDIR"/"$VERSION"
 mkdir -p "$IMAGEDIR"
 
 imagebuilder="$(basename "$IMAGEBUILDER_URL")"
+checksums_url="$(dirname "$IMAGEBUILDER_URL")/sha256sums"
+trustedkeys=$PWD/keys/trustedkeys.kbx
 
 (
     cd "$DLDIR"
     wget --continue "$IMAGEBUILDER_URL" -O "$imagebuilder"
-)
+    wget "${checksums_url}"     -O "${imagebuilder}.sha256sums"
+    wget "${checksums_url}.asc" -O "${imagebuilder}.sha256sums.asc"
+
+    gpgv --keyring="$trustedkeys" \
+         "${imagebuilder}.sha256sums.asc" "${imagebuilder}.sha256sums" \
+            || exit 42
+
+    sha256sum --ignore-missing --check ${imagebuilder}.sha256sums || exit 43
+) || exit 50
 
 tar -C "$BUILDDIR" -axf "$DLDIR"/"$imagebuilder"
 
