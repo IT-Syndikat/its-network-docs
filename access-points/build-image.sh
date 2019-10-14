@@ -2,7 +2,7 @@
 
 [ $# -ge 1 ] || exit 1
 CONTROL="$1"; shift
-IMAGEBUILDER_URL=${IMAGEBUILDER_URL:-https://downloads.lede-project.org/snapshots/targets/ar71xx/generic/lede-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz}
+IMAGEBUILDER_URL=${IMAGEBUILDER_URL:-https://downloads.openwrt.org/snapshots/targets/ar71xx/generic/openwrt-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz}
 
 TOPDIR="$PWD"
 DLDIR=${DLDIR:-"dl"}
