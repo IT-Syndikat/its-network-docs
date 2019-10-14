@@ -1,12 +1,21 @@
 ITS WiFi Access Points Setup
 ============================
 
-We build the access points in use at the space using the OpenWrt image
-builder. The deployed images are completely hands-off. No configuration of the
-running firmware should be necessary as all the device specific setup is done
-using `/etc/uci-defaults/` by keying off the device's MAC address.
+This directory contains the scripts and configuration for the automated building
+of OpenWrt image-build based firmware images.
+
+We use this to build fully pre-configured images for our 802.11
+access-points. The deployed images are completely hands-off. No configuration of
+the running firmware should be necessary as all the device specific setup is
+done using `/etc/uci-defaults/` by keying off the device's MAC address.
 
 See [`files/common/its/etc/uci-defaults/50-config-from-mac`](files/common/its/etc/uci-defaults/50-config-from-mac) for details.
+
+Note that some of the files in this repository contain secrets, like
+passwords. These files are stored using
+[git-annex](https://git-annex.branchable.com/) which merely stores a hash in the
+(public) git repo and ships the relevant file contents off to a fileserver or
+other internal storage location.
 
 Building Images
 ---------------
