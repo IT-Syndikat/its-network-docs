@@ -36,8 +36,8 @@ the ImageBuilder used as well its hash and the corresponding image's hash.
 
 Each produced image file contains the target, subtarget and profile names for
 the targeted device (among other things), for example the Ubiquity UniFi AC
-Lite's image is called `*-ar71xx-generic-ubnt-unifiac-lite*-sysupgrade.bin`
-standing for `TARGET=ar71xx`, `SUBTARGET=generic`, `PROFILE=ubnt-unifiac-lite`.
+Lite's image is called `*-ath79-generic-ubnt_unifiac-lite*-sysupgrade.bin`
+standing for `TARGET=ath79`, `SUBTARGET=generic`, `PROFILE=ubnt_unifiac-lite`.
 
 These images can then be deployed by copying them to the respective device in
 `/tmp` using `scp` and then running, over ssh:
