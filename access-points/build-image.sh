@@ -1,8 +1,10 @@
 #!/bin/sh
 
+set -e
+
 [ $# -ge 1 ] || exit 1
 CONTROL="$1"; shift
-IMAGEBUILDER_URL=${IMAGEBUILDER_URL:-https://downloads.openwrt.org/snapshots/targets/ar71xx/generic/openwrt-imagebuilder-ar71xx-generic.Linux-x86_64.tar.xz}
+IMAGEBUILDER_URL=${IMAGEBUILDER_URL:-https://downloads.openwrt.org/snapshots/targets/ath79/generic/openwrt-imagebuilder-ath79-generic.Linux-x86_64.tar.xz}
 
 TOPDIR="$PWD"
 DLDIR=${DLDIR:-"dl"}
@@ -53,11 +55,11 @@ subtarget=$(. "$CONTROL"; echo "${SUBTARGET}")
 
     mkdir -p "$tmp"/etc
     mkdir -p "$tmp"/etc/its-access-point/
-    printf '%s\n' "$VERSION" > "$tmp"/etc/its-access-point-version # legacy
     printf '%s\n' "$VERSION" > "$tmp"/etc/its-access-point/version
     printf '%s\n' "$IMAGEBUILDER_URL" \
            > "$tmp"/etc/its-access-point/imagebuilder-url
-    sha512sum "$imagebuilder" > "$tmp"/etc/its-access-point/imagebuilder-hash
+    sha512sum "$DLDIR/$imagebuilder" \
+              > "$tmp"/etc/its-access-point/imagebuilder-hash
     cat "$CONTROL" > "$tmp"/etc/its-access-point/control
 
     if [ -n "$COMMON_FILES" ]; then
@@ -73,7 +75,7 @@ subtarget=$(. "$CONTROL"; echo "${SUBTARGET}")
     make image FILES="$tmp" 1>&2
 )
 
-cp "$IMAGEBUILDER_DIR"/bin/targets/ar71xx/"${subtarget}"/openwrt*-"${target}-${subtarget}-${profile}"-squashfs-sysupgrade.bin "$IMAGEDIR"/
+cp "$IMAGEBUILDER_DIR"/bin/targets/ath79/"${subtarget}"/openwrt*-"${target}-${subtarget}-${profile}"-squashfs-sysupgrade.bin "$IMAGEDIR"/
 
 ln -snf "$VERSION" images/latest
 

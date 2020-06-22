@@ -1,14 +1,11 @@
 all: its
 
-OPENWRT_VERSION=18.06.4
-
-its-tl-wr841-v10:
-	IMAGEBUILDER_URL='https://downloads.openwrt.org/releases/$(OPENWRT_VERSION)/targets/ar71xx/tiny/openwrt-imagebuilder-$(OPENWRT_VERSION)-ar71xx-tiny.Linux-x86_64.tar.xz' ./build-image.sh control/tl-wr841-v10
+OPENWRT_VERSION=19.07.3
 
 its-ubnt-unifiac-lite:
-	IMAGEBUILDER_URL='https://downloads.openwrt.org/releases/$(OPENWRT_VERSION)/targets/ar71xx/generic/openwrt-imagebuilder-$(OPENWRT_VERSION)-ar71xx-generic.Linux-x86_64.tar.xz' ./build-image.sh control/ubnt-unifiac-lite
+	IMAGEBUILDER_URL='https://downloads.openwrt.org/releases/$(OPENWRT_VERSION)/targets/ath79/generic/openwrt-imagebuilder-$(OPENWRT_VERSION)-ath79-generic.Linux-x86_64.tar.xz' ./build-image.sh control/ubnt-unifiac-lite
 
-its: its-ubnt-unifiac-lite its-tl-wr841-v10
+its: its-ubnt-unifiac-lite
 
 DATE = $(shell date +'%Y%m%d')
 VERSION = v0.$(DATE)

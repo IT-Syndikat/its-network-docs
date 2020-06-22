@@ -1,6 +1,6 @@
-PROFILE=ubnt-unifiac-lite
+PROFILE=ubnt_unifiac-lite
 FILES=files/ubnt-unifiac-lite
-TARGET=ar71xx
+TARGET=ath79
 SUBTARGET=generic
 COMMON_FILES=files/common/its
 PACKAGES='
