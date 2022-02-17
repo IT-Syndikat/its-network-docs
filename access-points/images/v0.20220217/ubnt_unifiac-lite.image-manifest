@@ -1,0 +1,6 @@
+Date: Thu, 17 Feb 2022 22:51:26 +0100
+Image-Builder: https://downloads.openwrt.org/releases/19.07.8/targets/ath79/generic/openwrt-imagebuilder-19.07.8-ath79-generic.Linux-x86_64.tar.xz
+
+Checksums-Sha512:
+  12e53dde0fef1730f17684b22190053fd12face29da778b99a0f3167dbe229a66f42c3c82e8e957075c481ba32576b9fa3f53ca4c6aac8ac17a96949f5a12061  openwrt-imagebuilder-19.07.8-ath79-generic.Linux-x86_64.tar.xz
+  61366d912094e5c04bb2b004643874c19cdb205402cb97b0a4f6cc4bc48e295025c9cbde62b587488b365959384567479c573b208661edb02067df0519ec730f  openwrt-19.07.8-ath79-generic-ubnt_unifiac-lite-squashfs-sysupgrade.bin
