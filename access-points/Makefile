@@ -1,6 +1,6 @@
 all: its
 
-OPENWRT_VERSION=19.07.3
+OPENWRT_VERSION=19.07.8
 
 its-ubnt-unifiac-lite:
 	IMAGEBUILDER_URL='https://downloads.openwrt.org/releases/$(OPENWRT_VERSION)/targets/ath79/generic/openwrt-imagebuilder-$(OPENWRT_VERSION)-ath79-generic.Linux-x86_64.tar.xz' ./build-image.sh control/ubnt-unifiac-lite
